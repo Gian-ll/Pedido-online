@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import comidaRoutes from './routes/comidaRoutes.js';
 import resenaRoutes from './routes/resenaRoutes.js';
+import pedidoRoutes from './routes/pedidoRoutes.js';
 
 const app = express();
 
