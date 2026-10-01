@@ -10,6 +10,7 @@ app.use(express.json());
 
 app.use('/api', comidaRoutes);
 app.use('/api/resenas', resenaRoutes); 
+app.use('/api/pedidos', pedidoRoutes);
 
 app.listen(3000, () => {
   console.log('Servidor corriendo en http://localhost:3000');
