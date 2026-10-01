@@ -1,4 +1,5 @@
 import { guardarResena } from '../models/resenaModel.js';
+import { obtenerResenasPorComida } from '../models/resenaModel.js';
 
 export const crearResena = async (datosResena) => {
   const { puntuacion, comentario, comida_id_comida } = datosResena;
@@ -9,4 +10,8 @@ export const crearResena = async (datosResena) => {
 
   const resultado = await guardarResena(puntuacion, comentario, comida_id_comida);
   return resultado;
+};
+
+export const listarResenas = async (id_comida) => {
+  return await obtenerResenasPorComida(id_comida);
 };
