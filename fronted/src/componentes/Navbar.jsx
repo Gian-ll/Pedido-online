@@ -3,7 +3,7 @@ import "./Navbar.css";
 function Navbar({ cantidadCarrito, onAbrirCarrito, onAbrirCatalogo }) {
     return (
     <nav className="navbar">
-        <div className="navbar-logo">
+        <div className="navbar-logo" onClick={onAbrirCatalogo} style={{ cursor: 'pointer' }}>
             <svg width="220" height="45" viewBox="0 0 220 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g transform="translate(5, 4)">
                     {/* Pan superior */}
