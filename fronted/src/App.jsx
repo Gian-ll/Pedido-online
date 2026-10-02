@@ -1,13 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 
 import Navbar from './componentes/Navbar';
+import Slider from './componentes/Slider';
 import Catalogo from "./pages/Catalogo";
 import Carrito from "./pages/Carrito";
+import Footer from './componentes/Footer';
 
 function App() {
   const [carrito, setCarrito] = useState([]);
   const [mostrarCarrito, setMostrarCarrito] = useState(false);
+
+  // Volver arriba cuando se cambia de vista
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [mostrarCarrito]);
 
   // Agregar comida al carrito
   const agregarAlCarrito = (comida) => {
@@ -29,7 +36,7 @@ function App() {
   const abrirCarrito = () => {
     setMostrarCarrito(true);
   };
-  
+
   const volverCatalogo = () => {
     setMostrarCarrito(false);
   };
@@ -41,12 +48,14 @@ function App() {
 
   return (
     <div className="app">
-      <Navbar 
-      cantidadCarrito={carrito.length}
-      onAbrirCarrito={abrirCarrito}
+      <Navbar
+        cantidadCarrito={carrito.length}
+        onAbrirCarrito={abrirCarrito}
+        onAbrirCatalogo={abrirCatalogo}
       />
 
-      {mostrarCarrito ? (
+      <main className="main-content">
+        {mostrarCarrito ? (
         <>
           <Carrito
             carrito={carrito}
@@ -61,8 +70,14 @@ function App() {
           </div>
         </>
       ) : (
-        <Catalogo onAgregar={agregarAlCarrito} />
+        <>
+          <Slider />
+          <Catalogo onAgregar={agregarAlCarrito} />
+        </>
       )}
+      </main>
+
+      <Footer />
     </div>
   );
 }

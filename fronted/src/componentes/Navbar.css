@@ -5,6 +5,9 @@
     padding: 15px 40px;
     background-color: #842626;
     border-bottom: 1px solid #ddd;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .navbar-logo h2 {
