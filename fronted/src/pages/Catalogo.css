@@ -1,0 +1,35 @@
+#catalogo {
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+#catalogo h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 32px;
+}
+
+/* Contenedor de las tarjetas */
+.catalogo {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+/* Adaptación para tablets */
+@media (max-width: 900px) {
+    .catalogo {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Adaptación para celulares */
+@media (max-width: 600px) {
+    #catalogo {
+        padding: 20px;
+    }
+    .catalogo {
+        grid-template-columns: 1fr;
+    }
+}
