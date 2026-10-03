@@ -14,16 +14,16 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Enlaces</h4>
           <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#nosotros">Sobre nosotros</a></li>
-            <li><a href="#contacto">Contacto</a></li>
+            <li><a href="#inicio" onClick={e => e.preventDefault()}>Inicio</a></li>
+            <li><a href="#nosotros" onClick={e => e.preventDefault()}>Sobre nosotros</a></li>
+            <li><a href="#contacto" onClick={e => e.preventDefault()}>Contacto</a></li>
           </ul>
         </div>
         <div className="footer-section">
           <h4>Legal</h4>
           <ul>
-            <li><a href="#terminos">Términos de servicio</a></li>
-            <li><a href="#privacidad">Política de privacidad</a></li>
+            <li><a href="#terminos" onClick={e => e.preventDefault()}>Términos de servicio</a></li>
+            <li><a href="#privacidad" onClick={e => e.preventDefault()}>Política de privacidad</a></li>
           </ul>
         </div>
       </div>

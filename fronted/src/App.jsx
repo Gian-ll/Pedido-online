@@ -14,7 +14,29 @@ import Bebidas from './pages/Bebidas';
 
 function App() {
   const [carrito, setCarrito] = useState([]);
-  const [vistaActual, setVistaActual] = useState('catalogo'); // 'catalogo', 'carrito', 'historial'
+  const [vistaActual, setVistaActual] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('vista') || 'catalogo';
+  });
+
+  const cambiarVista = (nuevaVista) => {
+    setVistaActual(nuevaVista);
+    window.history.pushState({ vista: nuevaVista }, '', `?vista=${nuevaVista}`);
+  };
+
+  useEffect(() => {
+    const manejarBotonAtras = (evento) => {
+      if (evento.state && evento.state.vista) {
+        setVistaActual(evento.state.vista);
+      } else {
+        setVistaActual('catalogo');
+      }
+    };
+    window.addEventListener('popstate', manejarBotonAtras);
+    window.history.replaceState({ vista: vistaActual }, '', `?vista=${vistaActual}`);
+
+    return () => window.removeEventListener('popstate', manejarBotonAtras);
+  }, []);
 
   // Cargar historial de localStorage si existe, o inicializar vacío
   const [historial, setHistorial] = useState(() => {
@@ -105,7 +127,7 @@ function App() {
 
       // Vaciamos carrito y vamos al historial
       setCarrito([]);
-      setVistaActual('historial');
+      cambiarVista('historial');
       alert(`¡Pedido #${numero_orden} registrado con éxito en la base de datos!`);
 
     } catch (error) {
@@ -118,9 +140,9 @@ function App() {
     <div className="app">
       <Navbar
         cantidadCarrito={carrito.length}
-        onAbrirCarrito={() => setVistaActual('carrito')}
-        onAbrirCatalogo={() => setVistaActual('catalogo')}
-        onAbrirHistorial={() => setVistaActual('historial')}
+        onAbrirCarrito={() => cambiarVista('carrito')}
+        onAbrirCatalogo={() => cambiarVista('catalogo')}
+        onAbrirHistorial={() => cambiarVista('historial')}
       />
 
       <main className="main-content">
@@ -133,7 +155,7 @@ function App() {
               onConfirmar={confirmarPedido}
             />
             <div className="volver-container">
-              <button className="volver-btn" onClick={() => setVistaActual('catalogo')}>
+              <button className="volver-btn" onClick={() => cambiarVista('catalogo')}>
                 Volver a la carta
               </button>
             </div>
@@ -144,7 +166,7 @@ function App() {
           <>
             <Historial historial={historial} />
             <div className="volver-container">
-              <button className="volver-btn" onClick={() => setVistaActual('catalogo')}>
+              <button className="volver-btn" onClick={() => cambiarVista('catalogo')}>
                 Volver a la carta
               </button>
             </div>
@@ -158,7 +180,7 @@ function App() {
             {vistaActual === 'ensaladas' && <Ensaladas onAgregar={agregarAlCarrito} />}
             {vistaActual === 'bebidas' && <Bebidas onAgregar={agregarAlCarrito} />}
             <div className="volver-container">
-              <button className="volver-btn" onClick={() => setVistaActual('catalogo')}>
+              <button className="volver-btn" onClick={() => cambiarVista('catalogo')}>
                 Volver al menú
               </button>
             </div>
@@ -168,7 +190,7 @@ function App() {
         {vistaActual === 'catalogo' && (
           <>
             <Slider />
-            <Catalogo onAbrirCategoria={(cat) => setVistaActual(cat)} />
+            <Catalogo onAbrirCategoria={(cat) => cambiarVista(cat)} />
           </>
         )}
       </main>
