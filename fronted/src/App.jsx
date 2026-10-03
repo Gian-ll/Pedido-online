@@ -7,11 +7,15 @@ import Catalogo from "./pages/Catalogo";
 import Carrito from "./pages/Carrito";
 import Historial from "./pages/Historial";
 import Footer from './componentes/Footer';
+import Pizzas from './pages/Pizzas';
+import Sandwiches from './pages/Sandwiches';
+import Ensaladas from './pages/Ensaladas';
+import Bebidas from './pages/Bebidas';
 
 function App() {
   const [carrito, setCarrito] = useState([]);
   const [vistaActual, setVistaActual] = useState('catalogo'); // 'catalogo', 'carrito', 'historial'
-  
+
   // Cargar historial de localStorage si existe, o inicializar vacío
   const [historial, setHistorial] = useState(() => {
     const guardado = localStorage.getItem('historialPedidos');
@@ -84,25 +88,26 @@ function App() {
         throw new Error('Error al procesar el pedido en el backend');
       }
 
-      // El backend nos devuelve el número de orden generado
-      const { numero_orden } = await respuesta.json();
+      // El backend nos devuelve el número de orden generado y el repartidor
+      const { numero_orden, repartidor } = await respuesta.json();
 
       const nuevoPedido = {
         id_pedido: numero_orden, // guardamos el ID real de la BD
         fecha: new Date().toLocaleString(),
         cliente: datosCliente,
         items: [...carrito],
-        total: total
+        total: total,
+        repartidor: repartidor // guardamos el repartidor real de la BD
       };
-      
+
       // Lo agregamos al historial local para que se siga viendo en pantalla
       setHistorial([nuevoPedido, ...historial]);
-      
+
       // Vaciamos carrito y vamos al historial
       setCarrito([]);
       setVistaActual('historial');
       alert(`¡Pedido #${numero_orden} registrado con éxito en la base de datos!`);
-      
+
     } catch (error) {
       console.error(error);
       alert('Hubo un problema al guardar el pedido. Intenta nuevamente.');
@@ -134,7 +139,7 @@ function App() {
             </div>
           </>
         )}
-        
+
         {vistaActual === 'historial' && (
           <>
             <Historial historial={historial} />
@@ -146,10 +151,24 @@ function App() {
           </>
         )}
 
+        {['pizzas', 'sandwiches', 'ensaladas', 'bebidas'].includes(vistaActual) && (
+          <>
+            {vistaActual === 'pizzas' && <Pizzas onAgregar={agregarAlCarrito} />}
+            {vistaActual === 'sandwiches' && <Sandwiches onAgregar={agregarAlCarrito} />}
+            {vistaActual === 'ensaladas' && <Ensaladas onAgregar={agregarAlCarrito} />}
+            {vistaActual === 'bebidas' && <Bebidas onAgregar={agregarAlCarrito} />}
+            <div className="volver-container">
+              <button className="volver-btn" onClick={() => setVistaActual('catalogo')}>
+                Volver al menú
+              </button>
+            </div>
+          </>
+        )}
+
         {vistaActual === 'catalogo' && (
           <>
             <Slider />
-            <Catalogo onAgregar={agregarAlCarrito} />
+            <Catalogo onAbrirCategoria={(cat) => setVistaActual(cat)} />
           </>
         )}
       </main>

@@ -1,34 +1,32 @@
 #catalogo {
-    padding: 40px;
-    max-width: 1200px;
+    padding: 80px 20px;
+    max-width: 1600px;
     margin: 0 auto;
 }
 
 #catalogo h1 {
     text-align: center;
-    margin-bottom: 30px;
-    font-size: 32px;
+    margin-bottom: 60px;
+    font-size: 44px;
+    color: #333;
+    font-weight: 800;
 }
 
 /* Contenedor de las tarjetas */
 .catalogo {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
 }
 
-/* Adaptación para tablets */
-@media (max-width: 900px) {
+/* Adaptación para pantallas más pequeñas por si acaso */
+@media (max-width: 1024px) {
     .catalogo {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Adaptación para celulares */
 @media (max-width: 600px) {
-    #catalogo {
-        padding: 20px;
-    }
     .catalogo {
         grid-template-columns: 1fr;
     }

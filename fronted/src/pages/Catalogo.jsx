@@ -1,37 +1,52 @@
 import "./Catalogo.css";
 import FoodCard from "../componentes/Comid-card";
 
-function Catalogo({ onAgregar }) {
-    const comidas = [
+function Catalogo({ onAbrirCategoria }) {
+    const categorias = [
         {
             id: 1,
-            nombre: "Hamburguesa clásica",
-            precio: 12.90,
-            descripcion: "Deliciosa hamburguesa con carne de res, queso, lechuga y tomate.",
-            imagen: "https://imagenesonline.s3.us-east-2.amazonaws.com/comidas/hamburquesa+doble.jpeg",
+            nombre: "Pizzas",
+            descripcion: "Deliciosas pizzas artesanales con los mejores ingredientes, horneadas a la perfección.",
+            imagen: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+            ruta: "pizzas"
         },
         {
             id: 2,
-            nombre: "Pollo broaster",
-            precio: 15.90,
-            descripcion: "Crujiente pollo broaster acompañado de papas fritas.",
-            imagen: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80",
+            nombre: "Sándwiches",
+            descripcion: "Sándwiches gourmet preparados con pan recién horneado y rellenos generosos.",
+            imagen: "https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80",
+            ruta: "sandwiches"
+        },
+        {
+            id: 3,
+            nombre: "Ensaladas",
+            descripcion: "Frescas ensaladas con vegetales de temporada y aderezos especiales de la casa.",
+            imagen: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=600&q=80",
+            ruta: "ensaladas"
+        },
+        {
+            id: 4,
+            nombre: "Bebidas",
+            descripcion: "Refrescantes bebidas naturales, gaseosas y cócteles sin alcohol.",
+            imagen: "https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=600&q=80",
+            ruta: "bebidas"
         },
     ];
 
     return (
         <section id="catalogo">
-            <h1>Carta</h1>
+            <h1>Nuestro Menú</h1>
             <div className="catalogo">
-                {comidas.map((comida) => (
+                {categorias.map((categoria) => (
                     <FoodCard
-                        key={comida.id}
-                        comida={comida}
-                        onAgregar={onAgregar}
+                        key={categoria.id}
+                        comida={categoria}
+                        onAbrirCategoria={onAbrirCategoria}
                     />
                 ))}
             </div>
-        </section>);
+        </section>
+    );
 }
 
 export default Catalogo;

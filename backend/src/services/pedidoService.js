@@ -5,7 +5,7 @@ export const procesarPedido = async (datosPedido) => {
   const { cliente, total, detalles } = datosPedido;
 
   // Pasamos esos datos a la transacción que creaste en el modelo
-  const numeroOrden = await crearPedidoTransaccion(cliente, total, detalles);
+  const resultado = await crearPedidoTransaccion(cliente, total, detalles);
 
-  return numeroOrden;
+  return resultado;
 };

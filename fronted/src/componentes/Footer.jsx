@@ -28,7 +28,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; {year} Pedido Online. Todos los derechos reservados.</p>
+        <p>&copy; {year} Pedido Onlin. Todos los derechos reservados.</p>
       </div>
     </footer>
   );

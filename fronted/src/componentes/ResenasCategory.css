@@ -1,0 +1,225 @@
+.resenas-categoria-wrapper {
+    margin-top: 80px;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #eee;
+}
+
+.resenas-titulo {
+    text-align: center;
+    font-size: 32px;
+    color: #111;
+    margin-bottom: 40px;
+    font-weight: 800;
+}
+
+.resenas-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 50px;
+}
+
+/* Izquierda */
+.resenas-izquierda h3 {
+    margin-top: 0;
+    font-size: 22px;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.resenas-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+}
+
+.form-group select {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+    transition: border 0.3s;
+}
+.form-group select:focus {
+    border-color: #e63946;
+}
+
+.plato-preview {
+    height: 140px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 5px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.plato-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.estrellas-selector {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    font-size: 30px;
+}
+
+.estrella-interactiva {
+    cursor: pointer;
+    color: #ccc; /* Gris para las inactivas */
+    transition: color 0.2s, transform 0.2s;
+}
+
+.estrella-interactiva:hover {
+    transform: scale(1.1);
+}
+
+.estrella-interactiva.activa {
+    color: #f5c518; /* Dorado brillante tipo IMDb/Amazon */
+}
+
+.form-group textarea {
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-family: inherit;
+    resize: vertical;
+    font-size: 15px;
+    color: #333;
+    outline: none;
+    background: #f9f9f9;
+    transition: border 0.3s;
+}
+.form-group textarea:focus {
+    border-color: #e63946;
+    background: #fff;
+}
+
+.btn-enviar-resena {
+    background: #222;
+    color: white;
+    font-weight: bold;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+.btn-enviar-resena:hover {
+    background: #000;
+    transform: translateY(-2px);
+}
+
+/* Derecha */
+.resenas-derecha h3 {
+    margin-top: 0;
+    font-size: 22px;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.resenas-lista-box {
+    background: #f8f9fa;
+    border-radius: 16px;
+    padding: 30px;
+    min-height: 400px;
+    max-height: 600px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border: 1px solid #eee;
+}
+
+.resenas-vacio {
+    text-align: center;
+    color: #888;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.icono-vacio {
+    font-size: 40px;
+    opacity: 0.5;
+}
+
+.resena-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    border: 1px solid #f1f1f1;
+}
+
+.resena-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+.resena-avatar {
+    width: 50px;
+    height: 50px;
+    background: #e63946;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.resena-header strong {
+    font-size: 18px;
+    color: #111;
+}
+
+.resena-estrellas {
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.resena-texto {
+    margin: 0;
+    color: #222;
+    line-height: 1.6;
+    font-size: 17px;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .resenas-container {
+        grid-template-columns: 1fr;
+    }
+}

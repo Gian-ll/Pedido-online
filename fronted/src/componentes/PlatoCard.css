@@ -1,0 +1,66 @@
+.plato-card {
+    width: 100%;
+    max-width: 300px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+}
+
+.plato-image {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.plato-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.plato-info h3 {
+    margin: 0 0 10px;
+    font-size: 20px;
+    color: #222;
+}
+
+.plato-description {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.4;
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+.plato-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+}
+
+.plato-price {
+    font-weight: bold;
+    font-size: 18px;
+    color: #000;
+}
+
+.agregar-btn {
+    background-color: #666;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.agregar-btn:hover {
+    background-color: #555;
+}

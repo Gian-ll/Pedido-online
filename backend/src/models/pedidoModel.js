@@ -13,26 +13,31 @@ export const crearPedidoTransaccion = async (cliente, total, detalles) => {
     const [resultadoCliente] = await connection.query(sqlCliente, [cliente.nombre, cliente.dni, cliente.telefono]);
     const idCliente = resultadoCliente.insertId;
 
-    // 3. Guardamos el Pedido (direccion, fecha_hora, total, cliente_id_cliente, repartidor_id_repartidor)
-    // Usaremos un repartidor por defecto (ej: 1) ya que es NOT NULL
-    const sqlPedido = 'INSERT INTO pedido (direccion, fecha_hora, total, cliente_id_cliente, repartidor_id_repartidor) VALUES (?, NOW(), ?, ?, 1)';
-    const [resultadoPedido] = await connection.query(sqlPedido, [cliente.direccion, total, idCliente]);
+    // 3. Obtener un repartidor al azar de la tabla repartidor
+    const [repartidores] = await connection.query('SELECT * FROM repartidor ORDER BY RAND() LIMIT 1');
+    if (repartidores.length === 0) {
+      throw new Error('No hay repartidores disponibles en la base de datos');
+    }
+    const repartidorAsignado = repartidores[0];
+
+    // 4. Guardamos el Pedido
+    const sqlPedido = 'INSERT INTO pedido (direccion, fecha_hora, total, cliente_id_cliente, repartidor_id_repartidor) VALUES (?, NOW(), ?, ?, ?)';
+    const [resultadoPedido] = await connection.query(sqlPedido, [cliente.direccion, total, idCliente, repartidorAsignado.id_repartidor]);
     const idPedido = resultadoPedido.insertId;
 
-    // 4. Guardamos cada plato (Detalle Pedido) vinculándolo al ID del pedido
+    // 5. Guardamos cada plato (Detalle Pedido) vinculándolo al ID del pedido
     const sqlDetalle = 'INSERT INTO detalle_pedido (cantidad, subtotal, pedido_id_pedido, comida_id_comida) VALUES (?, ?, ?, ?)';
 
-    // Hacemos un bucle para guardar todos los platos de la lista
     for (const item of detalles) {
       const subtotal = item.cantidad * item.precio_unitario;
       await connection.query(sqlDetalle, [item.cantidad, subtotal, idPedido, item.id_comida]);
     }
 
-    // 5. Si todo salió perfecto, confirmamos el guardado en las 3 tablas
+    // 6. Si todo salió perfecto, confirmamos el guardado
     await connection.commit();
 
-    // Devolvemos el número de orden para mostrárselo al cliente en la página web
-    return idPedido;
+    // Devolvemos el número de orden y los datos del repartidor para el frontend
+    return { idPedido, repartidor: repartidorAsignado };
 
   } catch (error) {
     // Si cualquier paso falla, deshacemos absolutamente todo

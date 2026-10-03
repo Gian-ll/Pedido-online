@@ -8,6 +8,7 @@ function Carrito({ carrito, onEliminar, onVaciar, onConfirmar }) {
         telefono: "",
         direccion: ""
     });
+    const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
 
     const handleInputChange = (e) => {
         setDatosCliente({
@@ -17,7 +18,7 @@ function Carrito({ carrito, onEliminar, onVaciar, onConfirmar }) {
     };
 
     const total = carrito.reduce(
-        (acumulado, comida) => acumulado + comida.precio,
+        (acumulado, comida) => acumulado + (Number(comida.precio) || 0),
         0
     );
     
@@ -40,7 +41,7 @@ function Carrito({ carrito, onEliminar, onVaciar, onConfirmar }) {
                         <div className="carrito-info">
                             <h3>{comida.nombre}</h3>
                             <p>{comida.descripcion}</p>
-                            <span>S/ {comida.precio.toFixed(2)}</span>
+                            <span>S/ {(Number(comida.precio) || 0).toFixed(2)}</span>
                         </div>
                         
                         <button className="eliminar-btn" onClick={() => onEliminar(index)} > Eliminar </button>
@@ -74,9 +75,20 @@ function Carrito({ carrito, onEliminar, onVaciar, onConfirmar }) {
                         Total: S/ {total.toFixed(2)}
                     </p>
                     
-                    <button className="vaciar-btn" onClick={onVaciar}>
-                        Vaciar carrito
-                    </button>
+                    {!mostrarConfirmacion ? (
+                        <button className="vaciar-btn" onClick={() => setMostrarConfirmacion(true)}>
+                            Vaciar carrito
+                        </button>
+                    ) : (
+                        <div className="confirmacion-vaciar">
+                            <span>¿Está seguro?</span>
+                            <button className="confirmar-si-btn" onClick={() => {
+                                onVaciar();
+                                setMostrarConfirmacion(false);
+                            }}>Sí</button>
+                            <button className="confirmar-no-btn" onClick={() => setMostrarConfirmacion(false)}>No</button>
+                        </div>
+                    )}
                     
                     <button className="confirmar-btn" onClick={() => onConfirmar(datosCliente, total)}>
                         Confirmar pedido

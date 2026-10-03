@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import './Slider.css';
 
 const images = [
-  '/slider1.jpg',
-  '/slider2.jpg',
-  '/slider3.jpg'
+  'https://imagenesonline.s3.us-east-2.amazonaws.com/comidas/slayer1.jpeg',
+  'https://imagenesonline.s3.us-east-2.amazonaws.com/comidas/slayer2.jpeg',
+  'https://imagenesonline.s3.us-east-2.amazonaws.com/comidas/slayer3.jpeg'
 ];
 
 const Slider = () => {
@@ -28,11 +28,11 @@ const Slider = () => {
   return (
     <div className="slider-container">
       {images.map((imgSrc, index) => (
-        <img 
-          key={index} 
-          src={imgSrc} 
-          alt={`Comida ${index + 1}`} 
-          className={`slider-image ${index === currentIndex ? 'active' : ''}`} 
+        <img
+          key={index}
+          src={imgSrc}
+          alt={`Comida ${index + 1}`}
+          className={`slider-image ${index === currentIndex ? 'active' : ''}`}
         />
       ))}
 
@@ -42,7 +42,7 @@ const Slider = () => {
       <button className="slider-btn next" onClick={nextSlide}>
         &#10095;
       </button>
-      
+
       <div className="slider-dots">
         {images.map((_, index) => (
           <span

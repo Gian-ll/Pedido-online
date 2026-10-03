@@ -1,30 +1,11 @@
 import "./Comid-card.css";
 
-function FoodCard({ comida, onAgregar }) {
+function FoodCard({ comida, onAbrirCategoria }) {
     return (
-    <article className="food-card">
-
-        <img className="food-image"
-        src={comida.imagen}
-        alt={comida.nombre}
-        />
-        
-        <div className="food-info">
+    <article className="category-card" onClick={() => onAbrirCategoria(comida.ruta)}>
+        <img className="category-image" src={comida.imagen} alt={comida.nombre} />
+        <div className="category-info">
             <h3>{comida.nombre}</h3>
-            
-            <p className="food-description">
-                {comida.descripcion}
-            </p>
-            
-            <div className="food-bottom">
-                <span className="food-price">
-                    S/ {comida.precio.toFixed(2)}
-                </span>
-                
-                <button className="add-button" onClick={() => onAgregar(comida)}>
-                    Agregar
-                </button>
-            </div>
         </div>
     </article>
     );

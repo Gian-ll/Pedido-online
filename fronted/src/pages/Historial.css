@@ -1,5 +1,5 @@
 .historial {
-  max-width: 800px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -21,9 +21,10 @@
 }
 
 .historial-lista {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+  gap: 2rem;
+  align-items: start;
 }
 
 .historial-card {
@@ -32,49 +33,110 @@
   padding: 1.5rem;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   border-left: 5px solid #FFB300;
+  transition: all 0.3s ease;
 }
 
 .historial-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
 }
 
-.historial-header h3 {
+.historial-info-basica {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.historial-info-basica h3 {
   margin: 0;
   color: #222;
+  font-size: 1.2rem;
 }
 
-.historial-header span {
+.historial-fecha {
   color: #777;
   font-size: 0.9rem;
 }
 
-.historial-cliente {
-  margin-bottom: 1rem;
+.historial-resumen {
+  display: flex;
+  align-items: center;
+  gap: 20px;
 }
 
-.historial-cliente p {
-  margin: 0.2rem 0;
+.historial-resumen strong {
+  font-size: 1.2rem;
+  color: #e63946;
+}
+
+.btn-detalles {
+  background-color: #2b2b2b;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-detalles:hover {
+  background-color: #000;
+}
+
+.historial-contenido-extra {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.historial-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 1.5rem;
+}
+
+.historial-cliente, .historial-repartidor {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.historial-cliente h4, .historial-repartidor h4 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 1rem;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 5px;
+}
+
+.historial-cliente p, .historial-repartidor p {
+  margin: 0.3rem 0;
   color: #444;
+  font-size: 0.95rem;
 }
 
 .historial-detalles h4 {
-  margin-bottom: 0.5rem;
+  margin: 0 0 10px 0;
   color: #333;
 }
 
 .historial-detalles ul {
   list-style: none;
   padding: 0;
-  margin: 0 0 1rem 0;
+  margin: 0;
 }
 
 .historial-detalles li {
-  padding: 0.3rem 0;
+  padding: 0.5rem 0;
   color: #555;
   border-bottom: 1px dashed #ddd;
   display: flex;
@@ -85,10 +147,17 @@
   border-bottom: none;
 }
 
-.historial-total {
-  text-align: right;
-  font-size: 1.1rem;
-  color: #e63946;
-  border-top: 1px solid #eee;
-  padding-top: 1rem;
+@media (max-width: 600px) {
+  .historial-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .historial-resumen {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .historial-info-grid {
+    grid-template-columns: 1fr;
+  }
 }

@@ -3,11 +3,12 @@ import { procesarPedido } from '../services/pedidoService.js';
 export const postPedido = async (req, res) => {
   try {
     const datosPedido = req.body; // Aquí llega todo el paquete (cliente, total, platos)
-    const idPedido = await procesarPedido(datosPedido);
+    const { idPedido, repartidor } = await procesarPedido(datosPedido);
 
     res.status(201).json({
       mensaje: '¡Pedido registrado con éxito!',
-      numero_orden: idPedido
+      numero_orden: idPedido,
+      repartidor: repartidor
     });
   } catch (error) {
     console.error('Error en la transacción del pedido:', error);
