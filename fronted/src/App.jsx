@@ -7,10 +7,7 @@ import Catalogo from "./pages/Catalogo";
 import Carrito from "./pages/Carrito";
 import Historial from "./pages/Historial";
 import Footer from './componentes/Footer';
-import Pizzas from './pages/Pizzas';
-import Sandwiches from './pages/Sandwiches';
-import Ensaladas from './pages/Ensaladas';
-import Bebidas from './pages/Bebidas';
+import CategoriaPage from './pages/CategoriaPage';
 
 function App() {
   const [carrito, setCarrito] = useState([]);
@@ -23,6 +20,20 @@ function App() {
     setVistaActual(nuevaVista);
     window.history.pushState({ vista: nuevaVista }, '', `?vista=${nuevaVista}`);
   };
+
+  // Optimizacion: Descargar el menu solo una vez al abrir la pagina
+  const [menuGlobal, setMenuGlobal] = useState([]);
+  
+  useEffect(() => {
+    fetch('http://localhost:3000/api/menu')
+      .then(res => res.json())
+      .then(data => {
+        // Le agregamos el id que necesita el frontend a todos los platos
+        const menuFormateado = data.map(item => ({ ...item, id: item.id_comida }));
+        setMenuGlobal(menuFormateado);
+      })
+      .catch(console.error);
+  }, []);
 
   useEffect(() => {
     const manejarBotonAtras = (evento) => {
@@ -175,10 +186,10 @@ function App() {
 
         {['pizzas', 'sandwiches', 'ensaladas', 'bebidas'].includes(vistaActual) && (
           <>
-            {vistaActual === 'pizzas' && <Pizzas onAgregar={agregarAlCarrito} />}
-            {vistaActual === 'sandwiches' && <Sandwiches onAgregar={agregarAlCarrito} />}
-            {vistaActual === 'ensaladas' && <Ensaladas onAgregar={agregarAlCarrito} />}
-            {vistaActual === 'bebidas' && <Bebidas onAgregar={agregarAlCarrito} />}
+            {vistaActual === 'pizzas' && <CategoriaPage titulo="Pizzas" categoriaId={1} menu={menuGlobal} onAgregar={agregarAlCarrito} />}
+            {vistaActual === 'sandwiches' && <CategoriaPage titulo="Sándwiches" categoriaId={2} menu={menuGlobal} onAgregar={agregarAlCarrito} />}
+            {vistaActual === 'ensaladas' && <CategoriaPage titulo="Ensaladas" categoriaId={3} menu={menuGlobal} onAgregar={agregarAlCarrito} />}
+            {vistaActual === 'bebidas' && <CategoriaPage titulo="Bebidas" categoriaId={4} menu={menuGlobal} onAgregar={agregarAlCarrito} />}
             <div className="volver-container">
               <button className="volver-btn" onClick={() => cambiarVista('catalogo')}>
                 Volver al menú
