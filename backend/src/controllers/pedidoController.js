@@ -2,7 +2,7 @@ import { procesarPedido } from '../services/pedidoService.js';
 
 export const postPedido = async (req, res) => {
   try {
-    const datosPedido = req.body; // Aquí llega todo el paquete (cliente, total, platos)
+    const datosPedido = req.body;
     const { idPedido, repartidor } = await procesarPedido(datosPedido);
 
     res.status(201).json({
