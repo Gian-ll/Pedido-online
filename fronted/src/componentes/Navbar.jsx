@@ -1,6 +1,6 @@
 import "./Navbar.css";
 
-function Navbar({ cantidadCarrito, onAbrirCarrito, onAbrirCatalogo }) {
+function Navbar({ cantidadCarrito, onAbrirCarrito, onAbrirCatalogo, onAbrirHistorial }) {
     return (
     <nav className="navbar">
         <div className="navbar-logo" onClick={onAbrirCatalogo} style={{ cursor: 'pointer' }}>
@@ -26,7 +26,8 @@ function Navbar({ cantidadCarrito, onAbrirCarrito, onAbrirCatalogo }) {
         </div>
         
         <div className="navbar-links">
-            <button className="carta-btn" onClick={onAbrirCatalogo}> Carta </button>
+            <button className="carta-btn" onClick={onAbrirHistorial}> 📜 Historial </button>
+            <button className="carta-btn" onClick={onAbrirCatalogo}> 🍽️ Carta </button>
 
             <button className="carrito-btn" onClick={onAbrirCarrito}>
                 🛒 Carrito

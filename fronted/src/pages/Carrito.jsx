@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Carrito.css";
 
-function Carrito({ carrito, onEliminar, onVaciar }) {
+function Carrito({ carrito, onEliminar, onVaciar, onConfirmar }) {
     const [datosCliente, setDatosCliente] = useState({
         nombre: "",
         dni: "",
@@ -78,7 +78,7 @@ function Carrito({ carrito, onEliminar, onVaciar }) {
                         Vaciar carrito
                     </button>
                     
-                    <button className="confirmar-btn">
+                    <button className="confirmar-btn" onClick={() => onConfirmar(datosCliente, total)}>
                         Confirmar pedido
                     </button>
                 </div>

@@ -8,7 +8,7 @@ function Catalogo({ onAgregar }) {
             nombre: "Hamburguesa clásica",
             precio: 12.90,
             descripcion: "Deliciosa hamburguesa con carne de res, queso, lechuga y tomate.",
-            imagen: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80",
+            imagen: "https://imagenesonline.s3.us-east-2.amazonaws.com/comidas/hamburquesa+doble.jpeg",
         },
         {
             id: 2,
@@ -18,20 +18,20 @@ function Catalogo({ onAgregar }) {
             imagen: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=500&q=80",
         },
     ];
-    
+
     return (
-    <section id="catalogo">
-        <h1>Carta</h1>
-        <div className="catalogo">
-            {comidas.map((comida) => (
-                <FoodCard
-                key={comida.id}
-                comida={comida}
-                onAgregar={onAgregar}
-                />
-            ))}
-        </div>
-    </section> );
+        <section id="catalogo">
+            <h1>Carta</h1>
+            <div className="catalogo">
+                {comidas.map((comida) => (
+                    <FoodCard
+                        key={comida.id}
+                        comida={comida}
+                        onAgregar={onAgregar}
+                    />
+                ))}
+            </div>
+        </section>);
 }
 
 export default Catalogo;
