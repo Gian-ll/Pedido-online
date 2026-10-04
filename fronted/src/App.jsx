@@ -1,16 +1,23 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 import Navbar from './componentes/Navbar';
 import Slider from './componentes/Slider';
 import Catalogo from "./pages/Catalogo";
 import Carrito from "./pages/Carrito";
 import Historial from "./pages/Historial";
+import Terminos from "./pages/Terminos";
+import Privacidad from "./pages/Privacidad";
 import Footer from './componentes/Footer';
 import CategoriaPage from './pages/CategoriaPage';
 
 function App() {
   const [carrito, setCarrito] = useState([]);
+  const [ultimoPedidoId, setUltimoPedidoId] = useState(null);
+  const [modalCancelacionAbierto, setModalCancelacionAbierto] = useState(false);
+  const [pedidoACancelar, setPedidoACancelar] = useState(null);
   const [vistaActual, setVistaActual] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get('vista') || 'catalogo';
@@ -25,7 +32,7 @@ function App() {
   const [menuGlobal, setMenuGlobal] = useState([]);
   
   useEffect(() => {
-    fetch('http://localhost:3000/api/menu')
+    fetch(`${API_URL}/api/menu`)
       .then(res => res.json())
       .then(data => {
         // Le agregamos el id que necesita el frontend a todos los platos
@@ -81,6 +88,32 @@ function App() {
     setCarrito([]);
   };
 
+  // Cancelar pedido (Abre modal)
+  const solicitarCancelacion = (indexPedido) => {
+    setPedidoACancelar(indexPedido);
+    setModalCancelacionAbierto(true);
+  };
+
+  // Confirma la cancelación desde el modal
+  const confirmarCancelacion = () => {
+    if (pedidoACancelar !== null) {
+      const nuevoHistorial = [...historial];
+      nuevoHistorial[pedidoACancelar] = {
+        ...nuevoHistorial[pedidoACancelar],
+        estado: 'Cancelado'
+      };
+      setHistorial(nuevoHistorial);
+      setPedidoACancelar(null);
+      setModalCancelacionAbierto(false);
+    }
+  };
+
+  // Cierra el modal sin cancelar
+  const cerrarModalCancelacion = () => {
+    setPedidoACancelar(null);
+    setModalCancelacionAbierto(false);
+  };
+
   const confirmarPedido = async (datosCliente, total) => {
     // Agrupar los items del carrito para el backend (cantidad, precio, id)
     const detalles = carrito.reduce((acc, comida) => {
@@ -109,7 +142,7 @@ function App() {
     };
 
     try {
-      const respuesta = await fetch('http://localhost:3000/api/pedidos', {
+      const respuesta = await fetch(`${API_URL}/api/pedidos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -136,10 +169,10 @@ function App() {
       // Lo agregamos al historial local para que se siga viendo en pantalla
       setHistorial([nuevoPedido, ...historial]);
 
-      // Vaciamos carrito y vamos al historial
+      // Vaciamos carrito y vamos a la pantalla de éxito
       setCarrito([]);
-      cambiarVista('historial');
-      alert(`¡Pedido #${numero_orden} registrado con éxito en la base de datos!`);
+      setUltimoPedidoId(numero_orden);
+      cambiarVista('pedidoExitoso');
 
     } catch (error) {
       console.error(error);
@@ -173,9 +206,27 @@ function App() {
           </>
         )}
 
+        {vistaActual === 'pedidoExitoso' && (
+          <div className="pedido-exitoso-container">
+            <svg className="icono-exito-svg" width="80" height="80" viewBox="0 0 24 24" fill="#4caf50" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            <h2>¡Pedido realizado correctamente!</h2>
+            <p>Tu orden #{ultimoPedidoId} ha sido registrada con éxito.</p>
+            <div className="opciones-post-pedido">
+              <button className="btn-opcion" onClick={() => cambiarVista('catalogo')}>
+                Seguir comprando
+              </button>
+              <button className="btn-opcion btn-secundario" onClick={() => cambiarVista('historial')}>
+                Ver en historial
+              </button>
+            </div>
+          </div>
+        )}
+
         {vistaActual === 'historial' && (
           <>
-            <Historial historial={historial} />
+            <Historial historial={historial} onCancelar={solicitarCancelacion} />
             <div className="volver-container">
               <button className="volver-btn" onClick={() => cambiarVista('catalogo')}>
                 Volver a la carta
@@ -204,9 +255,50 @@ function App() {
             <Catalogo onAbrirCategoria={(cat) => cambiarVista(cat)} />
           </>
         )}
+        {vistaActual === 'terminos' && (
+          <>
+            <Terminos />
+            <div className="volver-container">
+              <button className="volver-btn" onClick={() => cambiarVista('catalogo')}>
+                Volver al menú
+              </button>
+            </div>
+          </>
+        )}
+
+        {vistaActual === 'privacidad' && (
+          <>
+            <Privacidad />
+            <div className="volver-container">
+              <button className="volver-btn" onClick={() => cambiarVista('catalogo')}>
+                Volver al menú
+              </button>
+            </div>
+          </>
+        )}
+
       </main>
 
-      <Footer />
+      <Footer onCambiarVista={cambiarVista} />
+
+      {/* Modal de Cancelación Personalizado */}
+      {modalCancelacionAbierto && (
+        <div className="modal-overlay">
+          <div className="modal-cancelacion">
+            <div className="modal-icono">⚠️</div>
+            <h3>¿Deseas cancelar esta orden?</h3>
+            <p>Si cancelas, este pedido no será preparado. Esta acción no se puede deshacer.</p>
+            <div className="modal-botones">
+              <button className="btn-mantener-modal" onClick={cerrarModalCancelacion}>
+                No, mantener pedido
+              </button>
+              <button className="btn-cancelar-modal" onClick={confirmarCancelacion}>
+                Sí, cancelar pedido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

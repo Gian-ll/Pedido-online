@@ -1,0 +1,67 @@
+.terminos-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  padding: 0 20px;
+  color: #333;
+  animation: fadeIn 0.4s ease-out;
+}
+
+.terminos-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.terminos-header h1 {
+  font-size: 2.5rem;
+  color: #2b2b2b;
+  margin-bottom: 0.5rem;
+}
+
+.terminos-header p {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.terminos-content {
+  background-color: #fff;
+  padding: 3rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.terminos-section {
+  margin-bottom: 2rem;
+}
+
+.terminos-section:last-child {
+  margin-bottom: 0;
+}
+
+.terminos-section h2 {
+  font-size: 1.4rem;
+  color: #e63946;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #f1f1f1;
+  padding-bottom: 0.5rem;
+}
+
+.terminos-section p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #555;
+  text-align: justify;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 600px) {
+  .terminos-content {
+    padding: 1.5rem;
+  }
+  .terminos-header h1 {
+    font-size: 2rem;
+  }
+}

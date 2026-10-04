@@ -85,6 +85,32 @@
   background-color: #000;
 }
 
+.btn-cancelar {
+  background-color: #e63946;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.2s;
+}
+
+.btn-cancelar:hover {
+  background-color: #c1121f;
+}
+
+.historial-card.cancelado {
+  border-left: 5px solid #e63946;
+  opacity: 0.7;
+}
+
+.historial-estado-texto {
+  color: #e63946;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
 .historial-contenido-extra {
   margin-top: 20px;
   padding-top: 20px;

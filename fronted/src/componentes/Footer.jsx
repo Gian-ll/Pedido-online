@@ -1,7 +1,7 @@
 import React from 'react';
 import './Footer.css';
 
-const Footer = () => {
+const Footer = ({ onCambiarVista }) => {
   const year = new Date().getFullYear();
 
   return (
@@ -14,16 +14,15 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Enlaces</h4>
           <ul>
-            <li><a href="#inicio" onClick={e => e.preventDefault()}>Inicio</a></li>
-            <li><a href="#nosotros" onClick={e => e.preventDefault()}>Sobre nosotros</a></li>
+            <li><a href="#inicio" onClick={e => { e.preventDefault(); onCambiarVista && onCambiarVista('catalogo'); }}>Inicio</a></li>
             <li><a href="#contacto" onClick={e => e.preventDefault()}>Contacto</a></li>
           </ul>
         </div>
         <div className="footer-section">
           <h4>Legal</h4>
           <ul>
-            <li><a href="#terminos" onClick={e => e.preventDefault()}>Términos de servicio</a></li>
-            <li><a href="#privacidad" onClick={e => e.preventDefault()}>Política de privacidad</a></li>
+            <li><a href="#terminos" onClick={e => { e.preventDefault(); onCambiarVista && onCambiarVista('terminos'); }}>Términos de servicio</a></li>
+            <li><a href="#privacidad" onClick={e => { e.preventDefault(); onCambiarVista && onCambiarVista('privacidad'); }}>Política de privacidad</a></li>
           </ul>
         </div>
       </div>

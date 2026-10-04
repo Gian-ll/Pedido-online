@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './ResenasCategory.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
 export default function ResenasCategory({ platos }) {
     const [comidaSeleccionada, setComidaSeleccionada] = useState("");
     const [resenas, setResenas] = useState([]);
@@ -26,7 +28,7 @@ export default function ResenasCategory({ platos }) {
     const cargarResenas = async (id_comida) => {
         setCargando(true);
         try {
-            const res = await fetch(`http://localhost:3000/api/resenas/${id_comida}`);
+            const res = await fetch(`${API_URL}/api/resenas/${id_comida}`);
             const data = await res.json();
             setResenas(data);
         } catch (error) {
@@ -44,7 +46,7 @@ export default function ResenasCategory({ platos }) {
         const comentarioFinal = `${anonName}: ${nuevoComentario}`;
 
         try {
-            await fetch('http://localhost:3000/api/resenas/resenas', {
+            await fetch(`${API_URL}/api/resenas/resenas`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

@@ -1,18 +1,28 @@
 import { useState } from "react";
 import "./Historial.css";
 
-function HistorialItem({ pedido, index, totalHistorial }) {
+function HistorialItem({ pedido, index, totalHistorial, onCancelar }) {
   const [expandido, setExpandido] = useState(false);
+  const estaCancelado = pedido.estado === 'Cancelado';
 
   return (
-    <div className="historial-card">
+    <div className={`historial-card ${estaCancelado ? 'cancelado' : ''}`}>
       <div className="historial-header">
         <div className="historial-info-basica">
-          <h3>Pedido #{8472900000 + Number(pedido.id_pedido || totalHistorial - index)}</h3>
+          <h3>Pedido #{pedido.id_pedido || totalHistorial - index}</h3>
           <span className="historial-fecha">{pedido.fecha}</span>
         </div>
         <div className="historial-resumen">
           <strong>S/ {(Number(pedido.total) || 0).toFixed(2)}</strong>
+          {estaCancelado && <span className="historial-estado-texto">Cancelado</span>}
+          {!estaCancelado && (
+            <button 
+              className="btn-cancelar" 
+              onClick={() => onCancelar(index)}
+            >
+              Cancelar
+            </button>
+          )}
           <button className="btn-detalles" onClick={() => setExpandido(!expandido)}>
             {expandido ? "Ocultar" : "Detalles"}
           </button>
@@ -52,7 +62,7 @@ function HistorialItem({ pedido, index, totalHistorial }) {
   );
 }
 
-function Historial({ historial }) {
+function Historial({ historial, onCancelar }) {
   if (!historial || historial.length === 0) {
     return (
       <section className="historial">
@@ -72,6 +82,7 @@ function Historial({ historial }) {
             pedido={pedido} 
             index={index} 
             totalHistorial={historial.length} 
+            onCancelar={onCancelar}
           />
         ))}
       </div>
